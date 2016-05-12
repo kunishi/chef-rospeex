@@ -8,4 +8,5 @@
 
 .vagrant/
 nodes/
+berks-cookbooks/
 site-cookbooks/
