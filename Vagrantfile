@@ -56,6 +56,13 @@ Vagrant.configure(2) do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.gui = true
     vb.memory = "2048"
+    vb.customize [
+      "modifyvm", :id,
+      "--vram", "256",
+      "--accelerate3d", "on",
+      "--audio", "coreaudio",
+      "--audiocontroller", "ac97",
+    ]
   end
 
   # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
@@ -77,5 +84,6 @@ Vagrant.configure(2) do |config|
     chef.nodes_path = "nodes"
 
     chef.add_recipe "core-setup"
+    chef.add_recipe "ros"
   end
 end
