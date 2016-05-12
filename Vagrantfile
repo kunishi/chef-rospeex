@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "box-cutter/ubuntu1404-desktop"
+  config.vm.box = "yuki-takei/ubuntu-trusty64-ja"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -53,6 +53,10 @@ Vagrant.configure(2) do |config|
   #
   # View the documentation for the provider you are using for more
   # information on available options.
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = true
+    vb.memory = "2048"
+  end
 
   # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
   # such as FTP and Heroku are also available. See the documentation at
@@ -68,6 +72,10 @@ Vagrant.configure(2) do |config|
   #   sudo apt-get update
   #   sudo apt-get install -y apache2
   # SHELL
-  config.vm.provision "chef_solo" do |chef|
+  config.vm.provision "chef_zero" do |chef|
+    chef.cookbooks_path = ["cookbooks", "berks-cookbooks"]
+    chef.nodes_path = "nodes"
+
+    chef.add_recipe "core-setup"
   end
 end
