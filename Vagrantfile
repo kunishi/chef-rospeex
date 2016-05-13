@@ -60,9 +60,12 @@ Vagrant.configure(2) do |config|
       "modifyvm", :id,
       "--vram", "256",
       "--accelerate3d", "on",
-      "--audio", "coreaudio",
-      "--audiocontroller", "ac97",
     ]
+    if RUBY_PLATFORM =~ /darwin/
+      vb.customize ["modifyvm", :id, "--audio", 'coreaudio', '--audiocontroller', 'ac97']
+    elsif RUBY_PLATFORM =~ /mingw|mswin|bccwin|cygwin|emx/
+      vb.customize ["modifyvm", :id, "--audio", "dsound", "--audiocontroller", "ac97"]
+    end
   end
 
   # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
